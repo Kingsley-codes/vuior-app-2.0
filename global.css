@@ -1,0 +1,47 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+@theme {
+  /* PRIMARY BRAND COLORS */
+  --color-vuior-green-50: #eafbf5;
+  --color-vuior-green-100: #d4f5ea;
+  --color-vuior-green-200: #a9ebd5;
+  --color-vuior-green-300: #73dbba;
+  --color-vuior-green-400: #36c994;
+  --color-vuior-green-500: #14b87a;
+
+  /* MAIN BRAND GREEN */
+  --color-vuior-primary: #00b874;
+
+  /* DARK FINTECH GREENS */
+  --color-vuior-green-600: #009966;
+  --color-vuior-green-700: #007a52;
+  --color-vuior-green-800: #00563a;
+  --color-vuior-green-900: #013524;
+
+  /* SPECIAL UI GREENS */
+  --color-vuior-mint: #bdf5dd;
+  --color-vuior-soft-green: #7ee2b8;
+  --color-vuior-neon-green: #19e28f;
+  --color-vuior-success: #12c779;
+
+  /* BACKGROUND GREENS */
+  --color-vuior-dark-bg: #021b14;
+  --color-vuior-dark-surface: #06281f;
+  --color-vuior-card-green: #0a3a2d;
+  --color-vuior-glass-green: rgba(20, 184, 122, 0.12);
+
+  --font-sans: "Inter_400Regular";
+  --font-inter-medium: "Inter_500Medium";
+  --font-inter-semibold: "Inter_600SemiBold";
+  --font-inter-bold: "Inter_700Bold";
+}
+
+@layer base {
+  * {
+    font-family: "Inter_400Regular";
+  }
+}
