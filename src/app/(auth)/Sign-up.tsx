@@ -11,7 +11,6 @@ import {
   Platform,
   Alert,
   Modal,
-  ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CountryPicker, { Country } from "react-native-country-picker-modal";
@@ -32,6 +31,8 @@ interface FormData {
   password: string;
   confirmPassword: string;
 }
+
+const authBackground = require("../../../assets/authBgImage.png");
 
 // Validation
 const validateForm = (form: FormData) => {
@@ -173,11 +174,20 @@ export default function SignUpScreen() {
   };
 
   return (
-    <ImageBackground
-      source={require("../../../assets/authBgImage.png")}
-      style={{ flex: 1 }}
-      resizeMode="cover"
-    >
+    <View style={{ flex: 1 }}>
+      <Image
+        source={authBackground}
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        resizeMode="cover"
+      />
       <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
@@ -815,6 +825,6 @@ export default function SignUpScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </ImageBackground>
+    </View>
   );
 }

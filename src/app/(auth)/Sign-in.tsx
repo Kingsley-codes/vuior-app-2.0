@@ -10,7 +10,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-  ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -28,6 +27,8 @@ interface FormData {
   email: string;
   password: string;
 }
+
+const authBackground = require("../../../assets/authBgImage.png");
 
 export default function SignInScreen() {
   const [showPassword, setShowPassword] = useState(false);
@@ -73,11 +74,20 @@ export default function SignInScreen() {
   if (!fontsLoaded) return null;
 
   return (
-    <ImageBackground
-      source={require("../../../assets/authBgImage.png")}
-      style={{ flex: 1 }}
-      resizeMode="cover"
-    >
+    <View style={{ flex: 1 }}>
+      <Image
+        source={authBackground}
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        resizeMode="cover"
+      />
       <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
@@ -246,7 +256,7 @@ export default function SignInScreen() {
             {/* Log In Button */}
             <TouchableOpacity
               style={{
-                backgroundColor: "#15803d",
+                backgroundColor: "#14b87a",
                 borderRadius: 12,
                 paddingVertical: 16,
                 alignItems: "center",
@@ -381,6 +391,6 @@ export default function SignInScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </ImageBackground>
+    </View>
   );
 }
