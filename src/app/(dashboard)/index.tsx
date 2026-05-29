@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { View, ScrollView, StatusBar, SafeAreaView } from "react-native";
-import HomeHeader from "../components/HomeHeader";
-import BalanceCard from "../components/BalanceCard";
-import QuickActions from "../components/QuickActions";
-import SavingsOverview from "../components/SavingsOverview";
-import MaximizeSavings from "../components/MaximizeSavings";
-import BottomTabBar from "../components/BottomTabBar";
+import { ScrollView, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import HomeHeader from "@/components/homeScreen/Homeheader";
+import BalanceCard from "@/components/homeScreen/Balancecard";
+import QuickActions from "@/components/homeScreen/Quickactions";
+import SavingsOverview from "@/components/homeScreen/Savingsoverview";
+import MaximizeSavings from "@/components/homeScreen/Maximizesavings";
+import BottomTabBar from "@/components/homeScreen/Bottomtabbar";
 
 export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState("home");
