@@ -3,14 +3,14 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function BalanceCard() {
   return (
-    <View className="mx-5 mt-3 rounded-2xl overflow-hidden">
+    <View className="mx-5 mt-3 rounded-2xl border border-vuior-green-800 overflow-hidden">
       <ImageBackground
-        source={require("../../../assets/balance-bg.png")}
+        source={require("../../../assets/new-bg.png")}
         className="rounded-2xl overflow-hidden"
-        resizeMode="cover"
+        resizeMode="stretch"
+        imageStyle={{ borderRadius: 16 }}
       >
-        {/* Dark overlay for readability */}
-        <View className="bg-vuior-glass-green rounded-2xl p-5">
+        <View className="rounded-2xl p-5">
           {/* Top Row */}
           <View className="flex-row items-center justify-between mb-3">
             <View className="flex-row items-center gap-x-2">
