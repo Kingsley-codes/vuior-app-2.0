@@ -1,25 +1,22 @@
-import { useState } from "react";
-import { ScrollView, StatusBar } from "react-native";
+import { ScrollView, StatusBar, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeHeader from "@/components/homeScreen/Homeheader";
 import BalanceCard from "@/components/homeScreen/Balancecard";
 import QuickActions from "@/components/homeScreen/Quickactions";
 import SavingsOverview from "@/components/homeScreen/Savingsoverview";
 import MaximizeSavings from "@/components/homeScreen/Maximizesavings";
-import BottomTabBar from "@/components/homeScreen/Bottomtabbar";
 
 export default function HomeScreen() {
-  const [activeTab, setActiveTab] = useState("home");
-
   return (
-    <SafeAreaView className="flex-1 bg-vuior-dark-bg">
+    <SafeAreaView className="flex-1 bg-vuior-dark-bg" style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#021b14" />
 
       {/* Scrollable Content */}
       <ScrollView
         className="flex-1"
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 16 }}
+        contentContainerStyle={styles.scrollContent}
         bounces
       >
         {/* Greeting Header */}
@@ -37,9 +34,19 @@ export default function HomeScreen() {
         {/* Maximize Savings Tiers */}
         <MaximizeSavings />
       </ScrollView>
-
-      {/* Bottom Tab Bar */}
-      <BottomTabBar activeTab={activeTab} onTabPress={setActiveTab} />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#021b14",
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 16,
+  },
+});
