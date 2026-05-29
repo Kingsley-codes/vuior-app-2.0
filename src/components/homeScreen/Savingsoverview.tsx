@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Svg, {
@@ -7,7 +6,6 @@ import Svg, {
   LinearGradient,
   Stop,
   Circle,
-  Line,
 } from "react-native-svg";
 
 // Sample data matching the screenshot
@@ -17,14 +15,22 @@ const DATA_POINTS = [
 ];
 const MONTHS = ["May 1", "May 8", "May 15", "May 22", "May 29"];
 
-function buildLinePath(data: number[], w: number, h: number, pad: number) {
+function buildLinePath(
+  data: number[],
+  w: number,
+  h: number,
+  padX: number,
+  padTop: number,
+  padBottom: number
+) {
   const min = Math.min(...data);
   const max = Math.max(...data);
   const range = max - min || 1;
 
   const points = data.map((v, i) => {
-    const x = pad + (i / (data.length - 1)) * (w - pad * 2);
-    const y = pad + (1 - (v - min) / range) * (h - pad * 2);
+    const x = padX + (i / (data.length - 1)) * (w - padX * 2);
+    const y =
+      padTop + (1 - (v - min) / range) * (h - padTop - padBottom);
     return { x, y };
   });
 
@@ -40,19 +46,28 @@ function buildLinePath(data: number[], w: number, h: number, pad: number) {
   // Close path for fill
   const fill =
     d +
-    ` L ${points[points.length - 1].x} ${h - pad} L ${points[0].x} ${h - pad} Z`;
+    ` L ${points[points.length - 1].x} ${h - padBottom} L ${points[0].x} ${
+      h - padBottom
+    } Z`;
 
   return { d, fill, points };
 }
 
-const FILTERS = ["This Week", "This Month", "3 Months", "1 Year"];
-
 export default function SavingsOverview() {
-  const [activeFilter, setActiveFilter] = useState("This Month");
   const W = 320;
   const H = 130;
-  const PAD = 8;
-  const { d, fill, points } = buildLinePath(DATA_POINTS, W, H, PAD);
+  const PAD_X = 8;
+  const PAD_TOP = 34;
+  const PAD_BOTTOM = 8;
+  const TOOLTIP_HEIGHT = 28;
+  const { d, fill, points } = buildLinePath(
+    DATA_POINTS,
+    W,
+    H,
+    PAD_X,
+    PAD_TOP,
+    PAD_BOTTOM
+  );
   const lastPoint = points[points.length - 1];
 
   return (
@@ -76,10 +91,10 @@ export default function SavingsOverview() {
       </View>
 
       {/* Amount + Trend */}
-      <Text className="text-vuior-green-900 text-xs text-gray-500 mb-1">
+      <Text className="text-vuior-green-900 text-xs font-inter-medium mb-1">
         Total Savings
       </Text>
-      <Text className="text-vuior-green-900 text-3xl font-inter-bold mb-1">
+      <Text className="text-vuior-green-800 text-3xl font-inter-bold mb-1">
         $128.40
       </Text>
       <View className="flex-row items-center gap-x-1 mb-4">
@@ -126,7 +141,7 @@ export default function SavingsOverview() {
         {/* Tooltip for last point */}
         <View
           className="absolute bg-vuior-primary rounded-lg px-2.5 py-1"
-          style={{ right: 0, top: lastPoint.y - H + 14 }}
+          style={{ right: 0, top: lastPoint.y - TOOLTIP_HEIGHT - 4 }}
         >
           <Text className="text-white text-xs font-inter-bold">$128.40</Text>
         </View>

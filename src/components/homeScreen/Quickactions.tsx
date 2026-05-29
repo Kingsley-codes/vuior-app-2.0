@@ -17,11 +17,7 @@ const actions = [
     id: "pay-bills",
     label: "Pay Bills",
     icon: (
-      <MaterialCommunityIcons
-        name="file-document-outline"
-        size={28}
-        color="#00b874"
-      />
+      <MaterialCommunityIcons name="file-document" size={28} color="#00b874" />
     ),
   },
   {
@@ -38,7 +34,7 @@ const actions = [
   {
     id: "history",
     label: "History",
-    icon: <Ionicons name="time-outline" size={28} color="#00b874" />,
+    icon: <MaterialCommunityIcons name="history" size={28} color="#00b874" />,
   },
 ];
 
