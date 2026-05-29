@@ -71,21 +71,11 @@ export default function SignInScreen() {
     Alert.alert("Info", "Password reset coming soon!");
   };
 
-  if (!fontsLoaded) return null;
-
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <Image
         source={authBackground}
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-        }}
+        className="absolute inset-0 w-full h-full"
         resizeMode="cover"
       />
       <StatusBar
@@ -111,22 +101,14 @@ export default function SignInScreen() {
               resizeMode="contain"
             />
             <Text
-              style={{
-                fontFamily: "Inter_700Bold",
-                fontSize: 24,
-                color: "#111827",
-                marginTop: 32,
-              }}
+              className="text-2xl text-gray-900 mt-0.5"
+              style={{ fontFamily: "Inter_700Bold" }}
             >
               Welcome back
             </Text>
             <Text
-              style={{
-                fontFamily: "Inter_400Regular",
-                fontSize: 14,
-                color: "#6b7280",
-                marginTop: 4,
-              }}
+              className="text-sm text-gray-500 mt-1"
+              style={{ fontFamily: "Inter_400Regular" }}
             >
               Log in to your Vuior account
             </Text>
@@ -137,36 +119,19 @@ export default function SignInScreen() {
             {/* Email */}
             <View className="mb-4">
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 14,
-                  color: "#374151",
-                  marginBottom: 6,
-                }}
+                className="text-sm text-gray-700 mb-1.5"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Email address
               </Text>
               <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                  borderWidth: 1,
-                  borderColor: "#e5e7eb",
-                  borderRadius: 12,
-                  paddingHorizontal: 14,
-                  paddingVertical: 14,
-                }}
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               >
                 <Ionicons name="mail-outline" size={18} color="#9ca3af" />
                 <TextInput
-                  style={{
-                    flex: 1,
-                    marginLeft: 10,
-                    fontSize: 14,
-                    color: "#111827",
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="flex-1 ml-2.5 text-sm text-gray-900"
+                  style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Enter your email"
                   placeholderTextColor="#9ca3af"
                   value={form.email}
@@ -181,26 +146,14 @@ export default function SignInScreen() {
             {/* Password */}
             <View className="mb-2">
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 14,
-                  color: "#374151",
-                  marginBottom: 6,
-                }}
+                className="text-sm text-gray-700 mb-1.5"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Password
               </Text>
               <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                  borderWidth: 1,
-                  borderColor: "#e5e7eb",
-                  borderRadius: 12,
-                  paddingHorizontal: 14,
-                  paddingVertical: 14,
-                }}
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
+                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               >
                 <Ionicons
                   name="lock-closed-outline"
@@ -208,13 +161,8 @@ export default function SignInScreen() {
                   color="#9ca3af"
                 />
                 <TextInput
-                  style={{
-                    flex: 1,
-                    marginLeft: 10,
-                    fontSize: 14,
-                    color: "#111827",
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="flex-1 ml-2.5 text-sm text-gray-900"
+                  style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Enter your password"
                   placeholderTextColor="#9ca3af"
                   value={form.password}
@@ -224,7 +172,7 @@ export default function SignInScreen() {
                 />
                 <TouchableOpacity
                   onPress={() => setShowPassword(!showPassword)}
-                  style={{ padding: 4 }}
+                  className="p-1"
                 >
                   <Ionicons
                     name={showPassword ? "eye-outline" : "eye-off-outline"}
@@ -236,17 +184,14 @@ export default function SignInScreen() {
             </View>
 
             {/* Forgot Password */}
-            <View style={{ alignItems: "flex-end", marginBottom: 24 }}>
+            <View className="items-end mb-6">
               <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={handleForgotPassword}
               >
                 <Text
-                  style={{
-                    fontFamily: "Inter_500Medium",
-                    fontSize: 14,
-                    color: "#16a34a",
-                  }}
+                  className="text-sm text-green-600"
+                  style={{ fontFamily: "Inter_500Medium" }}
                 >
                   Forgot password?
                 </Text>
@@ -255,79 +200,43 @@ export default function SignInScreen() {
 
             {/* Log In Button */}
             <TouchableOpacity
-              style={{
-                backgroundColor: "#14b87a",
-                borderRadius: 12,
-                paddingVertical: 16,
-                alignItems: "center",
-                marginBottom: 20,
-              }}
+              className="bg-[#24ab83] rounded-xl py-4 items-center mb-5"
               activeOpacity={0.88}
               onPress={handleSignIn}
             >
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 16,
-                  color: "#ffffff",
-                }}
+                className="text-base text-white"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Log In
               </Text>
             </TouchableOpacity>
 
             {/* Divider */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 16,
-              }}
-            >
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: "#e5e7eb" }}
-              />
+            <View className="flex-row items-center mb-4">
+              <View className="flex-1 h-px bg-gray-200" />
               <Text
-                style={{
-                  marginHorizontal: 12,
-                  fontSize: 14,
-                  color: "#9ca3af",
-                  fontFamily: "Inter_400Regular",
-                }}
+                className="mx-3 text-sm text-gray-400"
+                style={{ fontFamily: "Inter_400Regular" }}
               >
                 or
               </Text>
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: "#e5e7eb" }}
-              />
+              <View className="flex-1 h-px bg-gray-200" />
             </View>
 
             {/* Continue with Google */}
             <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: "#e5e7eb",
-                borderRadius: 12,
-                paddingVertical: 14,
-                marginBottom: 12,
-                backgroundColor: "rgba(255,255,255,0.9)",
-              }}
+              className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-3"
+              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
               onPress={() => handleSocialSignIn("google")}
             >
-              {/* Google G icon via SVG workaround — using a colored text label */}
-              <View style={{ marginRight: 10 }}>
+              <View className="mr-2.5">
                 <Ionicons name="logo-google" size={20} color="#EA4335" />
               </View>
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 14,
-                  color: "#111827",
-                }}
+                className="text-sm text-gray-900"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Continue with Google
               </Text>
@@ -335,17 +244,8 @@ export default function SignInScreen() {
 
             {/* Continue with Apple */}
             <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: "#e5e7eb",
-                borderRadius: 12,
-                paddingVertical: 14,
-                marginBottom: 32,
-                backgroundColor: "rgba(255,255,255,0.9)",
-              }}
+              className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-8"
+              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
               onPress={() => handleSocialSignIn("apple")}
             >
@@ -356,32 +256,24 @@ export default function SignInScreen() {
                 style={{ marginRight: 10 }}
               />
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 14,
-                  color: "#111827",
-                }}
+                className="text-sm text-gray-900"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Continue with Apple
               </Text>
             </TouchableOpacity>
 
             {/* Sign Up Link */}
-            <View style={{ alignItems: "center" }}>
+            <View className="items-center">
               <Text
-                style={{
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 14,
-                  color: "#6b7280",
-                }}
+                className="text-sm text-gray-500"
+                style={{ fontFamily: "Inter_400Regular" }}
               >
                 Don't have an account?{" "}
                 <Link href="/(auth)/Sign-up" asChild>
                   <Text
-                    style={{
-                      fontFamily: "Inter_600SemiBold",
-                      color: "#16a34a",
-                    }}
+                    className="text-green-600"
+                    style={{ fontFamily: "Inter_600SemiBold" }}
                   >
                     Sign up
                   </Text>

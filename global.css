@@ -34,6 +34,26 @@
   --color-vuior-card-green: #0a3a2d;
   --color-vuior-glass-green: rgba(20, 184, 122, 0.12);
 
+  /* DARKMODE COLORS */
+  --color-vuior-dark-text: #e5e7eb;
+  --color-vuior-dark-secondary-text: #9ca3af;
+
+  --color-vuior-dark-border: #374151;
+  --color-vuior-dark-hover: #064e3b;
+
+  /* Alternate colors */
+   --color-vuior-alternate-50:  "#E9FBF5";
+  --color-vuior-alternate-100: "#CFF7E8";
+  --color-vuior-alternate-200: "#A9F0D7";
+  --color-vuior-alternate-300: "#7FE6C2";
+  --color-vuior-alternate-400: "#4FD8A8";
+  --color-vuior-alternate-500: "#24AB83"; // main brand color
+  --color-vuior-alternate-600: "#1F9472";
+  --color-vuior-alternate-700: "#1D7E6D"; // secondary brand tone
+  --color-vuior-alternate-800: "#166456";
+  --color-vuior-alternate-900: "#0F4A40";
+  --color-vuior-alternate-950: "#082F28";
+
   --font-sans: "Inter_400Regular";
   --font-inter-medium: "Inter_500Medium";
   --font-inter-semibold: "Inter_600SemiBold";

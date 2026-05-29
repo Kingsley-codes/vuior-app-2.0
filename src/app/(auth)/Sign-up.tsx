@@ -71,18 +71,6 @@ const validateForm = (form: FormData) => {
   return errors;
 };
 
-// Reusable input wrapper style
-const inputWrapper = {
-  flexDirection: "row" as const,
-  alignItems: "center" as const,
-  backgroundColor: "rgba(255,255,255,0.9)",
-  borderWidth: 1,
-  borderColor: "#e5e7eb",
-  borderRadius: 12,
-  paddingHorizontal: 14,
-  paddingVertical: 14,
-};
-
 export default function SignUpScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -158,34 +146,11 @@ export default function SignUpScreen() {
     setShowCountryPicker(false);
   };
 
-  const labelStyle = {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 14,
-    color: "#374151",
-    marginBottom: 6,
-  };
-
-  const inputTextStyle = {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: 14,
-    color: "#111827",
-    fontFamily: "Inter_400Regular",
-  };
-
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <Image
         source={authBackground}
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-        }}
+        className="absolute inset-0 w-full h-full"
         resizeMode="cover"
       />
       <StatusBar
@@ -195,54 +160,53 @@ export default function SignUpScreen() {
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+        className="flex-1"
       >
         <ScrollView
-          style={{ flex: 1 }}
+          className="flex-1"
           contentContainerStyle={{ paddingBottom: 40 }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           {/* Logo Section */}
-          <View
-            style={{ alignItems: "center", paddingTop: 72, paddingBottom: 24 }}
-          >
+          <View className="items-center pt-[72px] pb-6">
             <Image
               source={require("../../../assets/signInLogo.png")}
               style={{ width: 200, height: 75 }}
               resizeMode="contain"
             />
             <Text
-              style={{
-                fontFamily: "Inter_700Bold",
-                fontSize: 24,
-                color: "#111827",
-                marginTop: 20,
-              }}
+              className="text-2xl text-gray-900 mt-5"
+              style={{ fontFamily: "Inter_700Bold" }}
             >
               Create your account
             </Text>
             <Text
-              style={{
-                fontFamily: "Inter_400Regular",
-                fontSize: 14,
-                color: "#6b7280",
-                marginTop: 4,
-              }}
+              className="text-sm text-gray-500 mt-1"
+              style={{ fontFamily: "Inter_400Regular" }}
             >
               Join Vuior and start saving by paying bills early
             </Text>
           </View>
 
           {/* Form */}
-          <View style={{ paddingHorizontal: 20, marginTop: 8 }}>
+          <View className="px-5 mt-2">
             {/* Full Name */}
-            <View style={{ marginBottom: 16 }}>
-              <Text style={labelStyle}>Full name</Text>
-              <View style={inputWrapper}>
+            <View className="mb-4">
+              <Text
+                className="text-sm text-gray-700 mb-1.5"
+                style={{ fontFamily: "Inter_600SemiBold" }}
+              >
+                Full name
+              </Text>
+              <View
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
+              >
                 <Ionicons name="person-outline" size={18} color="#9ca3af" />
                 <TextInput
-                  style={inputTextStyle}
+                  className="flex-1 ml-2.5 text-sm text-gray-900"
+                  style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Enter your full name"
                   placeholderTextColor="#9ca3af"
                   value={form.fullName}
@@ -252,13 +216,8 @@ export default function SignUpScreen() {
               </View>
               {errors.fullName && (
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#ef4444",
-                    marginTop: 4,
-                    marginLeft: 4,
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="text-xs text-red-500 mt-1 ml-1"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   {errors.fullName}
                 </Text>
@@ -266,12 +225,21 @@ export default function SignUpScreen() {
             </View>
 
             {/* Email */}
-            <View style={{ marginBottom: 16 }}>
-              <Text style={labelStyle}>Email address</Text>
-              <View style={inputWrapper}>
+            <View className="mb-4">
+              <Text
+                className="text-sm text-gray-700 mb-1.5"
+                style={{ fontFamily: "Inter_600SemiBold" }}
+              >
+                Email address
+              </Text>
+              <View
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
+              >
                 <Ionicons name="mail-outline" size={18} color="#9ca3af" />
                 <TextInput
-                  style={inputTextStyle}
+                  className="flex-1 ml-2.5 text-sm text-gray-900"
+                  style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Enter your email"
                   placeholderTextColor="#9ca3af"
                   value={form.email}
@@ -282,13 +250,8 @@ export default function SignUpScreen() {
               </View>
               {errors.email && (
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#ef4444",
-                    marginTop: 4,
-                    marginLeft: 4,
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="text-xs text-red-500 mt-1 ml-1"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   {errors.email}
                 </Text>
@@ -296,18 +259,21 @@ export default function SignUpScreen() {
             </View>
 
             {/* Phone Number */}
-            <View style={{ marginBottom: 16 }}>
-              <Text style={labelStyle}>Phone number</Text>
-              <View style={inputWrapper}>
+            <View className="mb-4">
+              <Text
+                className="text-sm text-gray-700 mb-1.5"
+                style={{ fontFamily: "Inter_600SemiBold" }}
+              >
+                Phone number
+              </Text>
+              <View
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
+              >
                 <Ionicons name="call-outline" size={18} color="#9ca3af" />
                 <TouchableOpacity
                   onPress={() => setShowCountryPicker(true)}
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginLeft: 8,
-                    marginRight: 4,
-                  }}
+                  className="flex-row items-center ml-2 mr-1"
                   activeOpacity={0.7}
                 >
                   <CountryPicker
@@ -328,31 +294,16 @@ export default function SignUpScreen() {
                     style={{ marginLeft: 2 }}
                   />
                   <Text
-                    style={{
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 14,
-                      color: "#374151",
-                      marginLeft: 4,
-                    }}
+                    className="text-sm text-gray-700 ml-1"
+                    style={{ fontFamily: "Inter_400Regular" }}
                   >
                     +{selectedCountry.callingCode?.[0]}
                   </Text>
                 </TouchableOpacity>
-                <View
-                  style={{
-                    width: 1,
-                    height: 20,
-                    backgroundColor: "#e5e7eb",
-                    marginRight: 8,
-                  }}
-                />
+                <View className="w-px h-5 bg-gray-200 mr-2" />
                 <TextInput
-                  style={{
-                    flex: 1,
-                    fontSize: 14,
-                    color: "#111827",
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="flex-1 text-sm text-gray-900"
+                  style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Enter your phone number"
                   placeholderTextColor="#9ca3af"
                   value={form.phone}
@@ -362,13 +313,8 @@ export default function SignUpScreen() {
               </View>
               {errors.phone && (
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#ef4444",
-                    marginTop: 4,
-                    marginLeft: 4,
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="text-xs text-red-500 mt-1 ml-1"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   {errors.phone}
                 </Text>
@@ -382,7 +328,7 @@ export default function SignUpScreen() {
               transparent={false}
               onRequestClose={() => setShowCountryPicker(false)}
             >
-              <View style={{ flex: 1 }}>
+              <View className="flex-1">
                 <CountryPicker
                   countryCode={selectedCountry.cca2}
                   withFlag
@@ -404,16 +350,25 @@ export default function SignUpScreen() {
             </Modal>
 
             {/* Password */}
-            <View style={{ marginBottom: 4 }}>
-              <Text style={labelStyle}>Password</Text>
-              <View style={inputWrapper}>
+            <View className="mb-1">
+              <Text
+                className="text-sm text-gray-700 mb-1.5"
+                style={{ fontFamily: "Inter_600SemiBold" }}
+              >
+                Password
+              </Text>
+              <View
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
+                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
+              >
                 <Ionicons
                   name="lock-closed-outline"
                   size={18}
                   color="#9ca3af"
                 />
                 <TextInput
-                  style={inputTextStyle}
+                  className="flex-1 ml-2.5 text-sm text-gray-900"
+                  style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Create a password"
                   placeholderTextColor="#9ca3af"
                   value={form.password}
@@ -423,7 +378,7 @@ export default function SignUpScreen() {
                 />
                 <TouchableOpacity
                   onPress={() => setShowPassword(!showPassword)}
-                  style={{ padding: 4 }}
+                  className="p-1"
                 >
                   <Ionicons
                     name={showPassword ? "eye-outline" : "eye-off-outline"}
@@ -433,25 +388,15 @@ export default function SignUpScreen() {
                 </TouchableOpacity>
               </View>
               <Text
-                style={{
-                  fontSize: 12,
-                  color: "#9ca3af",
-                  marginTop: 6,
-                  marginLeft: 4,
-                  fontFamily: "Inter_400Regular",
-                }}
+                className="text-xs text-gray-400 mt-1.5 ml-1"
+                style={{ fontFamily: "Inter_400Regular" }}
               >
                 At least 8 characters with a number and symbol
               </Text>
               {errors.password && (
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#ef4444",
-                    marginTop: 4,
-                    marginLeft: 4,
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="text-xs text-red-500 mt-1 ml-1"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   {errors.password}
                 </Text>
@@ -459,16 +404,25 @@ export default function SignUpScreen() {
             </View>
 
             {/* Confirm Password */}
-            <View style={{ marginBottom: 20, marginTop: 12 }}>
-              <Text style={labelStyle}>Confirm password</Text>
-              <View style={inputWrapper}>
+            <View className="mb-5 mt-3">
+              <Text
+                className="text-sm text-gray-700 mb-1.5"
+                style={{ fontFamily: "Inter_600SemiBold" }}
+              >
+                Confirm password
+              </Text>
+              <View
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
+                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
+              >
                 <Ionicons
                   name="lock-closed-outline"
                   size={18}
                   color="#9ca3af"
                 />
                 <TextInput
-                  style={inputTextStyle}
+                  className="flex-1 ml-2.5 text-sm text-gray-900"
+                  style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Confirm your password"
                   placeholderTextColor="#9ca3af"
                   value={form.confirmPassword}
@@ -478,7 +432,7 @@ export default function SignUpScreen() {
                 />
                 <TouchableOpacity
                   onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ padding: 4 }}
+                  className="p-1"
                 >
                   <Ionicons
                     name={
@@ -491,13 +445,8 @@ export default function SignUpScreen() {
               </View>
               {errors.confirmPassword && (
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#ef4444",
-                    marginTop: 4,
-                    marginLeft: 4,
-                    fontFamily: "Inter_400Regular",
-                  }}
+                  className="text-xs text-red-500 mt-1 ml-1"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   {errors.confirmPassword}
                 </Text>
@@ -505,22 +454,11 @@ export default function SignUpScreen() {
             </View>
 
             {/* Terms Checkbox */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 24,
-              }}
-            >
+            <View className="flex-row items-center mb-6">
               <TouchableOpacity
                 onPress={() => setAgreed(!agreed)}
+                className="w-5 h-5 rounded mr-2.5 items-center justify-center"
                 style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 4,
-                  marginRight: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
                   borderWidth: 1.5,
                   borderColor: agreed ? "#15803d" : "#d1d5db",
                   backgroundColor: agreed ? "#15803d" : "#ffffff",
@@ -532,23 +470,20 @@ export default function SignUpScreen() {
                 )}
               </TouchableOpacity>
               <Text
-                style={{
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 14,
-                  color: "#4b5563",
-                  flex: 1,
-                  flexWrap: "wrap",
-                }}
+                className="text-sm text-gray-600 flex-1 flex-wrap"
+                style={{ fontFamily: "Inter_400Regular" }}
               >
                 I agree to the{" "}
                 <Text
-                  style={{ color: "#16a34a", fontFamily: "Inter_500Medium" }}
+                  className="text-green-600"
+                  style={{ fontFamily: "Inter_500Medium" }}
                 >
                   Terms of Service
                 </Text>{" "}
                 and{" "}
                 <Text
-                  style={{ color: "#16a34a", fontFamily: "Inter_500Medium" }}
+                  className="text-green-600"
+                  style={{ fontFamily: "Inter_500Medium" }}
                 >
                   Privacy Policy
                 </Text>
@@ -557,66 +492,34 @@ export default function SignUpScreen() {
 
             {/* Sign Up Button */}
             <TouchableOpacity
-              style={{
-                backgroundColor: "#15803d",
-                borderRadius: 12,
-                paddingVertical: 16,
-                alignItems: "center",
-                marginBottom: 20,
-              }}
+              className="bg-green-700 rounded-xl py-4 items-center mb-5"
               activeOpacity={0.88}
               onPress={handleSignUp}
             >
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 16,
-                  color: "#ffffff",
-                }}
+                className="text-base text-white"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Sign Up
               </Text>
             </TouchableOpacity>
 
             {/* Divider */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 16,
-              }}
-            >
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: "#e5e7eb" }}
-              />
+            <View className="flex-row items-center mb-4">
+              <View className="flex-1 h-px bg-gray-200" />
               <Text
-                style={{
-                  marginHorizontal: 12,
-                  fontSize: 14,
-                  color: "#9ca3af",
-                  fontFamily: "Inter_400Regular",
-                }}
+                className="mx-3 text-sm text-gray-400"
+                style={{ fontFamily: "Inter_400Regular" }}
               >
                 or
               </Text>
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: "#e5e7eb" }}
-              />
+              <View className="flex-1 h-px bg-gray-200" />
             </View>
 
             {/* Continue with Google */}
             <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: "#e5e7eb",
-                borderRadius: 12,
-                paddingVertical: 14,
-                marginBottom: 12,
-                backgroundColor: "rgba(255,255,255,0.9)",
-              }}
+              className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-3"
+              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
               onPress={() => handleSocialSignUp("google")}
             >
@@ -627,11 +530,8 @@ export default function SignUpScreen() {
                 style={{ marginRight: 10 }}
               />
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 14,
-                  color: "#111827",
-                }}
+                className="text-sm text-gray-900"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Continue with Google
               </Text>
@@ -639,17 +539,8 @@ export default function SignUpScreen() {
 
             {/* Continue with Apple */}
             <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: "#e5e7eb",
-                borderRadius: 12,
-                paddingVertical: 14,
-                marginBottom: 24,
-                backgroundColor: "rgba(255,255,255,0.9)",
-              }}
+              className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-6"
+              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
               onPress={() => handleSocialSignUp("apple")}
             >
@@ -660,32 +551,24 @@ export default function SignUpScreen() {
                 style={{ marginRight: 10 }}
               />
               <Text
-                style={{
-                  fontFamily: "Inter_600SemiBold",
-                  fontSize: 14,
-                  color: "#111827",
-                }}
+                className="text-sm text-gray-900"
+                style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Continue with Apple
               </Text>
             </TouchableOpacity>
 
             {/* Login Link */}
-            <View style={{ alignItems: "center", marginBottom: 32 }}>
+            <View className="items-center mb-8">
               <Text
-                style={{
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 14,
-                  color: "#6b7280",
-                }}
+                className="text-sm text-gray-500"
+                style={{ fontFamily: "Inter_400Regular" }}
               >
                 Already have an account?{" "}
                 <Link href="/(auth)/Sign-in" asChild>
                   <Text
-                    style={{
-                      fontFamily: "Inter_600SemiBold",
-                      color: "#16a34a",
-                    }}
+                    className="text-green-600"
+                    style={{ fontFamily: "Inter_600SemiBold" }}
                   >
                     Log in
                   </Text>
@@ -694,29 +577,10 @@ export default function SignUpScreen() {
             </View>
 
             {/* Trust Badges */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                paddingTop: 20,
-                borderTopWidth: 1,
-                borderTopColor: "#f3f4f6",
-                paddingBottom: 8,
-              }}
-            >
+            <View className="flex-row justify-around pt-5 border-t border-gray-100 pb-2">
               {/* Secure & Encrypted */}
-              <View style={{ alignItems: "center", flex: 1 }}>
-                <View
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 22,
-                    backgroundColor: "#f0fdf4",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 8,
-                  }}
-                >
+              <View className="items-center flex-1">
+                <View className="w-11 h-11 rounded-full bg-green-50 items-center justify-center mb-2">
                   <Ionicons
                     name="shield-checkmark-outline"
                     size={22}
@@ -724,99 +588,52 @@ export default function SignUpScreen() {
                   />
                 </View>
                 <Text
-                  style={{
-                    fontFamily: "Inter_600SemiBold",
-                    fontSize: 12,
-                    color: "#111827",
-                    textAlign: "center",
-                  }}
+                  className="text-xs text-gray-900 text-center"
+                  style={{ fontFamily: "Inter_600SemiBold" }}
                 >
                   Secure & encrypted
                 </Text>
                 <Text
-                  style={{
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 12,
-                    color: "#9ca3af",
-                    textAlign: "center",
-                    marginTop: 2,
-                  }}
+                  className="text-xs text-gray-400 text-center mt-0.5"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   Your data is protected
                 </Text>
               </View>
 
               {/* Save more */}
-              <View style={{ alignItems: "center", flex: 1 }}>
-                <View
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 22,
-                    backgroundColor: "#f0fdf4",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 8,
-                  }}
-                >
+              <View className="items-center flex-1">
+                <View className="w-11 h-11 rounded-full bg-green-50 items-center justify-center mb-2">
                   <Ionicons name="time-outline" size={22} color="#15803d" />
                 </View>
                 <Text
-                  style={{
-                    fontFamily: "Inter_600SemiBold",
-                    fontSize: 12,
-                    color: "#111827",
-                    textAlign: "center",
-                  }}
+                  className="text-xs text-gray-900 text-center"
+                  style={{ fontFamily: "Inter_600SemiBold" }}
                 >
                   Save more
                 </Text>
                 <Text
-                  style={{
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 12,
-                    color: "#9ca3af",
-                    textAlign: "center",
-                    marginTop: 2,
-                  }}
+                  className="text-xs text-gray-400 text-center mt-0.5"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   Pay early, earn more
                 </Text>
               </View>
 
               {/* Bills made easy */}
-              <View style={{ alignItems: "center", flex: 1 }}>
-                <View
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 22,
-                    backgroundColor: "#f0fdf4",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 8,
-                  }}
-                >
+              <View className="items-center flex-1">
+                <View className="w-11 h-11 rounded-full bg-green-50 items-center justify-center mb-2">
                   <Ionicons name="card-outline" size={22} color="#15803d" />
                 </View>
                 <Text
-                  style={{
-                    fontFamily: "Inter_600SemiBold",
-                    fontSize: 12,
-                    color: "#111827",
-                    textAlign: "center",
-                  }}
+                  className="text-xs text-gray-900 text-center"
+                  style={{ fontFamily: "Inter_600SemiBold" }}
                 >
                   Bills made easy
                 </Text>
                 <Text
-                  style={{
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 12,
-                    color: "#9ca3af",
-                    textAlign: "center",
-                    marginTop: 2,
-                  }}
+                  className="text-xs text-gray-400 text-center mt-0.5"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
                   All in one place
                 </Text>
