@@ -21,6 +21,7 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
+import GoogleIcon from "@/components/GoogleIcon";
 
 // Types
 interface FormData {
@@ -125,7 +126,7 @@ export default function SignInScreen() {
                 Email address
               </Text>
               <View
-                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
                 style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               >
                 <Ionicons name="mail-outline" size={18} color="#9ca3af" />
@@ -190,7 +191,7 @@ export default function SignInScreen() {
                 onPress={handleForgotPassword}
               >
                 <Text
-                  className="text-sm text-green-600"
+                  className="text-sm text-vuior-alternate-500"
                   style={{ fontFamily: "Inter_500Medium" }}
                 >
                   Forgot password?
@@ -200,7 +201,7 @@ export default function SignInScreen() {
 
             {/* Log In Button */}
             <TouchableOpacity
-              className="bg-[#24ab83] rounded-xl py-4 items-center mb-5"
+              className="bg-vuior-alternate-500 rounded-xl py-4 items-center mb-5"
               activeOpacity={0.88}
               onPress={handleSignIn}
             >
@@ -232,7 +233,7 @@ export default function SignInScreen() {
               onPress={() => handleSocialSignIn("google")}
             >
               <View className="mr-2.5">
-                <Ionicons name="logo-google" size={20} color="#EA4335" />
+                <GoogleIcon size={20} />
               </View>
               <Text
                 className="text-sm text-gray-900"
@@ -272,7 +273,7 @@ export default function SignInScreen() {
                 Don't have an account?{" "}
                 <Link href="/(auth)/Sign-up" asChild>
                   <Text
-                    className="text-green-600"
+                    className="text-vuior-alternate-500"
                     style={{ fontFamily: "Inter_600SemiBold" }}
                   >
                     Sign up

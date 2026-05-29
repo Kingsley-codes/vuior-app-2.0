@@ -22,6 +22,7 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
+import GoogleIcon from "@/components/GoogleIcon";
 
 // Types
 interface FormData {
@@ -169,7 +170,7 @@ export default function SignUpScreen() {
           keyboardShouldPersistTaps="handled"
         >
           {/* Logo Section */}
-          <View className="items-center pt-[72px] pb-6">
+          <View className="items-center pt-18 pb-6">
             <Image
               source={require("../../../assets/signInLogo.png")}
               style={{ width: 200, height: 75 }}
@@ -200,7 +201,7 @@ export default function SignUpScreen() {
                 Full name
               </Text>
               <View
-                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
                 style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               >
                 <Ionicons name="person-outline" size={18} color="#9ca3af" />
@@ -233,7 +234,7 @@ export default function SignUpScreen() {
                 Email address
               </Text>
               <View
-                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
                 style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               >
                 <Ionicons name="mail-outline" size={18} color="#9ca3af" />
@@ -267,7 +268,7 @@ export default function SignUpScreen() {
                 Phone number
               </Text>
               <View
-                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-3.5"
+                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
                 style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               >
                 <Ionicons name="call-outline" size={18} color="#9ca3af" />
@@ -475,14 +476,14 @@ export default function SignUpScreen() {
               >
                 I agree to the{" "}
                 <Text
-                  className="text-green-600"
+                  className="text-vuior-alternate-500"
                   style={{ fontFamily: "Inter_500Medium" }}
                 >
                   Terms of Service
                 </Text>{" "}
                 and{" "}
                 <Text
-                  className="text-green-600"
+                  className="text-vuior-alternate-500"
                   style={{ fontFamily: "Inter_500Medium" }}
                 >
                   Privacy Policy
@@ -492,7 +493,7 @@ export default function SignUpScreen() {
 
             {/* Sign Up Button */}
             <TouchableOpacity
-              className="bg-green-700 rounded-xl py-4 items-center mb-5"
+              className="bg-vuior-alternate-500 rounded-xl py-4 items-center mb-5"
               activeOpacity={0.88}
               onPress={handleSignUp}
             >
@@ -523,14 +524,9 @@ export default function SignUpScreen() {
               activeOpacity={0.85}
               onPress={() => handleSocialSignUp("google")}
             >
-              <Ionicons
-                name="logo-google"
-                size={20}
-                color="#EA4335"
-                style={{ marginRight: 10 }}
-              />
+              <GoogleIcon size={20} />
               <Text
-                className="text-sm text-gray-900"
+                className="text-sm text-gray-900 ml-2"
                 style={{ fontFamily: "Inter_600SemiBold" }}
               >
                 Continue with Google
@@ -567,7 +563,7 @@ export default function SignUpScreen() {
                 Already have an account?{" "}
                 <Link href="/(auth)/Sign-in" asChild>
                   <Text
-                    className="text-green-600"
+                    className="text-vuior-alternate-500"
                     style={{ fontFamily: "Inter_600SemiBold" }}
                   >
                     Log in

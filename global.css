@@ -42,17 +42,17 @@
   --color-vuior-dark-hover: #064e3b;
 
   /* Alternate colors */
-   --color-vuior-alternate-50:  "#E9FBF5";
-  --color-vuior-alternate-100: "#CFF7E8";
-  --color-vuior-alternate-200: "#A9F0D7";
-  --color-vuior-alternate-300: "#7FE6C2";
-  --color-vuior-alternate-400: "#4FD8A8";
-  --color-vuior-alternate-500: "#24AB83"; // main brand color
-  --color-vuior-alternate-600: "#1F9472";
-  --color-vuior-alternate-700: "#1D7E6D"; // secondary brand tone
-  --color-vuior-alternate-800: "#166456";
-  --color-vuior-alternate-900: "#0F4A40";
-  --color-vuior-alternate-950: "#082F28";
+  --color-vuior-alternate-50: #e9fbf5;
+  --color-vuior-alternate-100: #cff7e8;
+  --color-vuior-alternate-200: #a9f0d7;
+  --color-vuior-alternate-300: #7fe6c2;
+  --color-vuior-alternate-400: #4fd8a8;
+  --color-vuior-alternate-500: #24ab83; /* main brand color */
+  --color-vuior-alternate-600: #1f9472;
+  --color-vuior-alternate-700: #1d7e6d; /* secondary brand tone */
+  --color-vuior-alternate-800: #166456;
+  --color-vuior-alternate-900: #0f4a40;
+  --color-vuior-alternate-950: #082f28;
 
   --font-sans: "Inter_400Regular";
   --font-inter-medium: "Inter_500Medium";
