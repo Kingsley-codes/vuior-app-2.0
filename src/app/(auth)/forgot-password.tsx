@@ -12,7 +12,7 @@ import {
   Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useRouter, type Href } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -25,23 +25,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { useSocialAuth } from "@/hooks/useSocialAuth";
 import { getAuthErrorMessage } from "@/utils/authErrors";
 
-// Types
-interface FormData {
-  email: string;
-  password: string;
-}
-
 const authBackground = require("../../../assets/authBgImage.png");
 
-export default function SignInScreen() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState<FormData>({
-    email: "",
-    password: "",
-  });
+export default function ForgotPasswordScreen() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-  const { login } = useAuth();
+  const { forgotPassword } = useAuth();
   const { socialSubmitting, continueWithGoogle, continueWithApple } =
     useSocialAuth();
 
@@ -54,22 +45,38 @@ export default function SignInScreen() {
 
   if (!fontsLoaded) return null;
 
-  const handleSignIn = async () => {
-    if (!form.email.trim()) {
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (error) {
+      setError("");
+    }
+  };
+
+  const handleResetPassword = async () => {
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      setError("Email is required");
       Alert.alert("Validation Error", "Please enter your email");
       return;
     }
-    if (!form.password.trim()) {
-      Alert.alert("Validation Error", "Please enter your password");
+
+    if (!/\S+@\S+\.\S+/.test(trimmedEmail)) {
+      setError("Email is invalid");
+      Alert.alert("Validation Error", "Please enter a valid email address");
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await login(form.email.trim(), form.password);
-      router.replace("/(dashboard)");
-    } catch (error) {
-      Alert.alert("Sign In Failed", getAuthErrorMessage(error));
+      await forgotPassword(trimmedEmail);
+      Alert.alert(
+        "Password Reset Sent",
+        "Check your email for reset instructions.",
+        [{ text: "Back to Login", onPress: () => router.replace("/(auth)/sign-in") }],
+      );
+    } catch (resetError) {
+      Alert.alert("Reset Failed", getAuthErrorMessage(resetError));
     } finally {
       setIsSubmitting(false);
     }
@@ -97,7 +104,6 @@ export default function SignInScreen() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          {/* Logo Section */}
           <View className="items-center pt-24 pb-8 px-5">
             <Image
               source={require("../../../assets/signInLogo.png")}
@@ -108,20 +114,18 @@ export default function SignInScreen() {
               className="text-2xl text-gray-900 mt-0.5"
               style={{ fontFamily: "Inter_700Bold" }}
             >
-              Welcome back
+              Reset password
             </Text>
             <Text
-              className="text-sm text-gray-500 mt-1"
+              className="text-sm text-gray-500 mt-1 text-center"
               style={{ fontFamily: "Inter_400Regular" }}
             >
-              Log in to your Vuior account
+              Enter your email and we will send reset instructions
             </Text>
           </View>
 
-          {/* Form Container */}
           <View className="px-5 pb-12">
-            {/* Email */}
-            <View className="mb-4">
+            <View className="mb-6">
               <Text
                 className="text-sm text-gray-700 mb-1.5"
                 style={{ fontFamily: "Inter_600SemiBold" }}
@@ -138,84 +142,38 @@ export default function SignInScreen() {
                   style={{ fontFamily: "Inter_400Regular" }}
                   placeholder="Enter your email"
                   placeholderTextColor="#9ca3af"
-                  value={form.email}
-                  onChangeText={(v) => setForm({ ...form, email: v })}
+                  value={email}
+                  onChangeText={handleEmailChange}
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
               </View>
-            </View>
-
-            {/* Password */}
-            <View className="mb-2">
-              <Text
-                className="text-sm text-gray-700 mb-1.5"
-                style={{ fontFamily: "Inter_600SemiBold" }}
-              >
-                Password
-              </Text>
-              <View
-                className="flex-row items-center border border-gray-200 rounded-xl px-3.5 py-1.5"
-                style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
-              >
-                <Ionicons
-                  name="lock-closed-outline"
-                  size={18}
-                  color="#9ca3af"
-                />
-                <TextInput
-                  className="flex-1 ml-2.5 text-sm text-gray-900"
-                  style={{ fontFamily: "Inter_400Regular" }}
-                  placeholder="Enter your password"
-                  placeholderTextColor="#9ca3af"
-                  value={form.password}
-                  onChangeText={(v) => setForm({ ...form, password: v })}
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                />
-                <TouchableOpacity
-                  onPress={() => setShowPassword(!showPassword)}
-                  className="p-1"
-                >
-                  <Ionicons
-                    name={showPassword ? "eye-outline" : "eye-off-outline"}
-                    size={18}
-                    color="#9ca3af"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {/* Forgot Password */}
-            <View className="items-end mb-6">
-              <Link href={"/(auth)/forgot-password" as Href} asChild>
+              {error && (
                 <Text
-                  className="text-sm text-vuior-alternate-500"
-                  style={{ fontFamily: "Inter_500Medium" }}
+                  className="text-xs text-red-500 mt-1 ml-1"
+                  style={{ fontFamily: "Inter_400Regular" }}
                 >
-                  Forgot password?
+                  {error}
                 </Text>
-              </Link>
+              )}
             </View>
 
-            {/* Log In Button */}
             <TouchableOpacity
               className="bg-vuior-alternate-500 rounded-xl py-4 items-center mb-5"
               activeOpacity={0.88}
-              onPress={handleSignIn}
-              disabled={isSubmitting}
+              onPress={handleResetPassword}
+              disabled={isSubmitting || Boolean(socialSubmitting)}
               style={{ opacity: isSubmitting ? 0.7 : 1 }}
             >
               <Text
                 className="text-base text-white"
                 style={{ fontFamily: "Inter_600SemiBold" }}
               >
-                {isSubmitting ? "Logging in..." : "Log In"}
+                {isSubmitting ? "Sending..." : "Send Reset Link"}
               </Text>
             </TouchableOpacity>
 
-            {/* Divider */}
             <View className="flex-row items-center mb-4">
               <View className="flex-1 h-px bg-gray-200" />
               <Text
@@ -227,13 +185,12 @@ export default function SignInScreen() {
               <View className="flex-1 h-px bg-gray-200" />
             </View>
 
-            {/* Continue with Google */}
             <TouchableOpacity
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-3"
               style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
               onPress={continueWithGoogle}
-              disabled={Boolean(socialSubmitting)}
+              disabled={Boolean(socialSubmitting) || isSubmitting}
             >
               <View className="mr-2.5">
                 <GoogleIcon size={20} />
@@ -248,13 +205,12 @@ export default function SignInScreen() {
               </Text>
             </TouchableOpacity>
 
-            {/* Continue with Apple */}
             <TouchableOpacity
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-8"
               style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
               onPress={continueWithApple}
-              disabled={Boolean(socialSubmitting)}
+              disabled={Boolean(socialSubmitting) || isSubmitting}
             >
               <Ionicons
                 name="logo-apple"
@@ -272,19 +228,18 @@ export default function SignInScreen() {
               </Text>
             </TouchableOpacity>
 
-            {/* Sign Up Link */}
             <View className="items-center">
               <Text
                 className="text-sm text-gray-500"
                 style={{ fontFamily: "Inter_400Regular" }}
               >
-                {"Don't have an account? "}
-                <Link href="/(auth)/sign-up" asChild>
+                Remembered your password?{" "}
+                <Link href="/(auth)/sign-in" asChild>
                   <Text
                     className="text-vuior-alternate-500"
                     style={{ fontFamily: "Inter_600SemiBold" }}
                   >
-                    Sign up
+                    Log in
                   </Text>
                 </Link>
               </Text>

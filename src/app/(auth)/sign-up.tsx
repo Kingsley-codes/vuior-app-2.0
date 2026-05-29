@@ -24,6 +24,7 @@ import {
 } from "@expo-google-fonts/inter";
 import GoogleIcon from "@/components/GoogleIcon";
 import { useAuth } from "@/hooks/useAuth";
+import { useSocialAuth } from "@/hooks/useSocialAuth";
 import { getAuthErrorMessage } from "@/utils/authErrors";
 
 // Types
@@ -101,6 +102,8 @@ export default function SignUpScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { registerUser } = useAuth();
+  const { socialSubmitting, continueWithGoogle, continueWithApple } =
+    useSocialAuth();
 
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -156,10 +159,6 @@ export default function SignUpScreen() {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleSocialSignUp = (provider: "google" | "apple") => {
-    Alert.alert("Info", `${provider} sign up coming soon!`);
   };
 
   const onSelectCountry = (country: Country) => {
@@ -544,14 +543,17 @@ export default function SignUpScreen() {
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-3"
               style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
-              onPress={() => handleSocialSignUp("google")}
+              onPress={continueWithGoogle}
+              disabled={Boolean(socialSubmitting)}
             >
               <GoogleIcon size={20} />
               <Text
                 className="text-sm text-gray-900 ml-2"
                 style={{ fontFamily: "Inter_600SemiBold" }}
               >
-                Continue with Google
+                {socialSubmitting === "google"
+                  ? "Connecting..."
+                  : "Continue with Google"}
               </Text>
             </TouchableOpacity>
 
@@ -560,7 +562,8 @@ export default function SignUpScreen() {
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-6"
               style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               activeOpacity={0.85}
-              onPress={() => handleSocialSignUp("apple")}
+              onPress={continueWithApple}
+              disabled={Boolean(socialSubmitting)}
             >
               <Ionicons
                 name="logo-apple"
@@ -572,7 +575,9 @@ export default function SignUpScreen() {
                 className="text-sm text-gray-900"
                 style={{ fontFamily: "Inter_600SemiBold" }}
               >
-                Continue with Apple
+                {socialSubmitting === "apple"
+                  ? "Connecting..."
+                  : "Continue with Apple"}
               </Text>
             </TouchableOpacity>
 
