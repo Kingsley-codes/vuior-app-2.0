@@ -22,7 +22,7 @@ import { useAuthContext } from "./AuthContext";
 interface UserAssetsValue {
   userBills: Bill[];
   userCredits: CreditHistory[];
-  userPreviousTransactions: Array<Record<string, unknown>>;
+  userPreviousTransactions: Record<string, unknown>[];
   stats: AppStats | null;
 }
 
@@ -33,16 +33,12 @@ export function UserAssetsProvider({ children }: { children: ReactNode }) {
   const [userBills, setUserBills] = useState<Bill[]>([]);
   const [userCredits, setUserCredits] = useState<CreditHistory[]>([]);
   const [userPreviousTransactions, setUserPreviousTransactions] = useState<
-    Array<Record<string, unknown>>
+    Record<string, unknown>[]
   >([]);
   const [stats, setStats] = useState<AppStats | null>(null);
 
   useEffect(() => {
     if (!user?.id) {
-      setUserBills([]);
-      setUserCredits([]);
-      setUserPreviousTransactions([]);
-      setStats(null);
       return;
     }
 
@@ -108,8 +104,16 @@ export function UserAssetsProvider({ children }: { children: ReactNode }) {
   }, [user?.id]);
 
   const value = useMemo(
-    () => ({ userBills, userCredits, userPreviousTransactions, stats }),
-    [userBills, userCredits, userPreviousTransactions, stats]
+    () =>
+      user?.id
+        ? { userBills, userCredits, userPreviousTransactions, stats }
+        : {
+            userBills: [],
+            userCredits: [],
+            userPreviousTransactions: [],
+            stats: null,
+          },
+    [stats, user?.id, userBills, userCredits, userPreviousTransactions]
   );
 
   return (

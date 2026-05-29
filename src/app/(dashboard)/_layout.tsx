@@ -1,7 +1,23 @@
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { ActivityIndicator, View } from "react-native";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function DashboardLayout() {
+  const { firebaseUser, loading, user } = useAuth();
+
+  if (loading || (firebaseUser && !user)) {
+    return (
+      <View className="flex-1 items-center justify-center bg-vuior-dark-bg">
+        <ActivityIndicator color="#00b874" />
+      </View>
+    );
+  }
+
+  if (!user) {
+    return <Redirect href="/(auth)/sign-in" />;
+  }
+
   return (
     <Tabs
       screenOptions={{

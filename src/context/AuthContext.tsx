@@ -89,7 +89,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
 
   useEffect(() => {
+    let unsubscribeUser: (() => void) | undefined;
+
     const unsubscribeAuth = onAuthStateChanged(auth, (nextFirebaseUser) => {
+      unsubscribeUser?.();
+      unsubscribeUser = undefined;
       setFirebaseUser(nextFirebaseUser);
 
       if (!nextFirebaseUser) {
@@ -98,8 +102,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
 
+      setLoading(true);
       const userRef = doc(db, "users", nextFirebaseUser.uid);
-      const unsubscribeUser = onSnapshot(
+      unsubscribeUser = onSnapshot(
         userRef,
         (snapshot) => {
           if (!snapshot.exists()) {
@@ -146,17 +151,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setLoading(false);
         }
       );
-
-      return () => unsubscribeUser();
     });
 
-    return () => unsubscribeAuth();
+    return () => {
+      unsubscribeUser?.();
+      unsubscribeAuth();
+    };
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     const credential = await signInWithEmailAndPassword(auth, email, password);
     const userDoc = await getDoc(doc(db, "users", credential.user.uid));
     if (!userDoc.exists()) {
+      await signOut(auth);
+      throw new Error("No Vuior profile was found for this account.");
+    }
+
+    if (userDoc.data().emailVerified !== true) {
+      await signOut(auth);
       throw new Error("Your email is not verified yet.");
     }
   }, []);

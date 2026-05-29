@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CountryPicker, { Country } from "react-native-country-picker-modal";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -23,6 +23,8 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import GoogleIcon from "@/components/GoogleIcon";
+import { useAuth } from "@/hooks/useAuth";
+import { getAuthErrorMessage } from "@/utils/authErrors";
 
 // Types
 interface FormData {
@@ -96,6 +98,9 @@ export default function SignUpScreen() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {},
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const { registerUser } = useAuth();
 
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -113,7 +118,7 @@ export default function SignUpScreen() {
     }
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     const validationErrors = validateForm(form);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -130,12 +135,27 @@ export default function SignUpScreen() {
       );
       return;
     }
-    console.log("Sign up data:", {
-      ...form,
-      countryCode: selectedCountry.cca2,
-      callingCode: selectedCountry.callingCode?.[0],
-    });
-    Alert.alert("Success", "Account created successfully!");
+
+    const [firstName, ...lastNameParts] = form.fullName.trim().split(/\s+/);
+
+    setIsSubmitting(true);
+    try {
+      await registerUser({
+        firstName,
+        lastName: lastNameParts.join(" "),
+        email: form.email.trim(),
+        password: form.password,
+        phoneCountry: `+${selectedCountry.callingCode?.[0] || "1"}`,
+        phoneLocal: form.phone,
+        dob: "",
+        accountType: "personal",
+      });
+      router.replace("/(dashboard)");
+    } catch (error) {
+      Alert.alert("Sign Up Failed", getAuthErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleSocialSignUp = (provider: "google" | "apple") => {
@@ -496,12 +516,14 @@ export default function SignUpScreen() {
               className="bg-vuior-alternate-500 rounded-xl py-4 items-center mb-5"
               activeOpacity={0.88}
               onPress={handleSignUp}
+              disabled={isSubmitting}
+              style={{ opacity: isSubmitting ? 0.7 : 1 }}
             >
               <Text
                 className="text-base text-white"
                 style={{ fontFamily: "Inter_600SemiBold" }}
               >
-                Sign Up
+                {isSubmitting ? "Creating account..." : "Sign Up"}
               </Text>
             </TouchableOpacity>
 
@@ -561,7 +583,7 @@ export default function SignUpScreen() {
                 style={{ fontFamily: "Inter_400Regular" }}
               >
                 Already have an account?{" "}
-                <Link href="/(auth)/Sign-in" asChild>
+                <Link href="/(auth)/sign-in" asChild>
                   <Text
                     className="text-vuior-alternate-500"
                     style={{ fontFamily: "Inter_600SemiBold" }}

@@ -3,6 +3,8 @@ import "../../global.css";
 import { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { AuthProvider } from "@/context/AuthContext";
+import { UserAssetsProvider } from "@/context/UserAssetsContext";
 import {
   HankenGrotesk_600SemiBold,
   HankenGrotesk_700Bold,
@@ -41,7 +43,11 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <AuthProvider>
+        <UserAssetsProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </UserAssetsProvider>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }

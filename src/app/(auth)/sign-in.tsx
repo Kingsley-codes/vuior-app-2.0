@@ -12,8 +12,7 @@ import {
   Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -22,6 +21,8 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import GoogleIcon from "@/components/GoogleIcon";
+import { useAuth } from "@/hooks/useAuth";
+import { getAuthErrorMessage } from "@/utils/authErrors";
 
 // Types
 interface FormData {
@@ -37,7 +38,9 @@ export default function SignInScreen() {
     email: "",
     password: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const { forgotPassword, login } = useAuth();
 
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -48,7 +51,7 @@ export default function SignInScreen() {
 
   if (!fontsLoaded) return null;
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!form.email.trim()) {
       Alert.alert("Validation Error", "Please enter your email");
       return;
@@ -57,9 +60,16 @@ export default function SignInScreen() {
       Alert.alert("Validation Error", "Please enter your password");
       return;
     }
-    console.log("Sign in data:", form);
-    Alert.alert("Success", "Logged in successfully!");
-    // router.push("/home");
+
+    setIsSubmitting(true);
+    try {
+      await login(form.email.trim(), form.password);
+      router.replace("/(dashboard)");
+    } catch (error) {
+      Alert.alert("Sign In Failed", getAuthErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleSocialSignIn = (provider: "google" | "apple") => {
@@ -67,9 +77,18 @@ export default function SignInScreen() {
     Alert.alert("Info", `${provider} sign in coming soon!`);
   };
 
-  const handleForgotPassword = () => {
-    console.log("Forgot password");
-    Alert.alert("Info", "Password reset coming soon!");
+  const handleForgotPassword = async () => {
+    if (!form.email.trim()) {
+      Alert.alert("Email Required", "Enter your email address first.");
+      return;
+    }
+
+    try {
+      await forgotPassword(form.email.trim());
+      Alert.alert("Password Reset Sent", "Check your email for reset instructions.");
+    } catch (error) {
+      Alert.alert("Reset Failed", getAuthErrorMessage(error));
+    }
   };
 
   return (
@@ -204,12 +223,14 @@ export default function SignInScreen() {
               className="bg-vuior-alternate-500 rounded-xl py-4 items-center mb-5"
               activeOpacity={0.88}
               onPress={handleSignIn}
+              disabled={isSubmitting}
+              style={{ opacity: isSubmitting ? 0.7 : 1 }}
             >
               <Text
                 className="text-base text-white"
                 style={{ fontFamily: "Inter_600SemiBold" }}
               >
-                Log In
+                {isSubmitting ? "Logging in..." : "Log In"}
               </Text>
             </TouchableOpacity>
 
@@ -270,8 +291,8 @@ export default function SignInScreen() {
                 className="text-sm text-gray-500"
                 style={{ fontFamily: "Inter_400Regular" }}
               >
-                Don't have an account?{" "}
-                <Link href="/(auth)/Sign-up" asChild>
+                {"Don't have an account? "}
+                <Link href="/(auth)/sign-up" asChild>
                   <Text
                     className="text-vuior-alternate-500"
                     style={{ fontFamily: "Inter_600SemiBold" }}
