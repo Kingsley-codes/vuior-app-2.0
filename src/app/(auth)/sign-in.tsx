@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
   Image,
   StatusBar,
@@ -174,16 +174,19 @@ export default function SignInScreen() {
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                 />
-                <TouchableOpacity
+                <Pressable
                   onPress={() => setShowPassword(!showPassword)}
                   className="p-1"
+                  style={({ pressed }) => ({
+                    opacity: pressed ? 0.7 : 1,
+                  })}
                 >
                   <Ionicons
                     name={showPassword ? "eye-outline" : "eye-off-outline"}
                     size={18}
                     color="#9ca3af"
                   />
-                </TouchableOpacity>
+                </Pressable>
               </View>
             </View>
 
@@ -200,12 +203,13 @@ export default function SignInScreen() {
             </View>
 
             {/* Log In Button */}
-            <TouchableOpacity
+            <Pressable
               className="bg-vuior-alternate-500 rounded-xl py-4 items-center mb-5"
-              activeOpacity={0.88}
               onPress={handleSignIn}
               disabled={isSubmitting}
-              style={{ opacity: isSubmitting ? 0.7 : 1 }}
+              style={({ pressed }) => ({
+                opacity: isSubmitting ? 0.7 : pressed ? 0.88 : 1,
+              })}
             >
               <Text
                 className="text-base text-white"
@@ -213,7 +217,7 @@ export default function SignInScreen() {
               >
                 {isSubmitting ? "Logging in..." : "Log In"}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
 
             {/* Divider */}
             <View className="flex-row items-center mb-4">
@@ -228,49 +232,61 @@ export default function SignInScreen() {
             </View>
 
             {/* Continue with Google */}
-            <TouchableOpacity
+            <Pressable
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-3"
-              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
-              activeOpacity={0.85}
+              style={({ pressed }) => ({
+                backgroundColor: "rgba(255,255,255,0.9)",
+                opacity: pressed ? 0.85 : 1,
+              })}
               onPress={continueWithGoogle}
               disabled={Boolean(socialSubmitting)}
             >
-              <View className="mr-2.5">
-                <GoogleIcon size={20} />
-              </View>
-              <Text
-                className="text-sm text-gray-900"
-                style={{ fontFamily: "Inter_600SemiBold" }}
-              >
-                {socialSubmitting === "google"
-                  ? "Connecting..."
-                  : "Continue with Google"}
-              </Text>
-            </TouchableOpacity>
+              {({ pressed }) => (
+                <>
+                  <View className="mr-2.5">
+                    <GoogleIcon size={20} />
+                  </View>
+                  <Text
+                    className="text-sm text-gray-900"
+                    style={{ fontFamily: "Inter_600SemiBold" }}
+                  >
+                    {socialSubmitting === "google"
+                      ? "Connecting..."
+                      : "Continue with Google"}
+                  </Text>
+                </>
+              )}
+            </Pressable>
 
             {/* Continue with Apple */}
-            <TouchableOpacity
+            <Pressable
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-8"
-              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
-              activeOpacity={0.85}
+              style={({ pressed }) => ({
+                backgroundColor: "rgba(255,255,255,0.9)",
+                opacity: pressed ? 0.85 : 1,
+              })}
               onPress={continueWithApple}
               disabled={Boolean(socialSubmitting)}
             >
-              <Ionicons
-                name="logo-apple"
-                size={20}
-                color="#111827"
-                style={{ marginRight: 10 }}
-              />
-              <Text
-                className="text-sm text-gray-900"
-                style={{ fontFamily: "Inter_600SemiBold" }}
-              >
-                {socialSubmitting === "apple"
-                  ? "Connecting..."
-                  : "Continue with Apple"}
-              </Text>
-            </TouchableOpacity>
+              {({ pressed }) => (
+                <>
+                  <Ionicons
+                    name="logo-apple"
+                    size={20}
+                    color="#111827"
+                    style={{ marginRight: 10 }}
+                  />
+                  <Text
+                    className="text-sm text-gray-900"
+                    style={{ fontFamily: "Inter_600SemiBold" }}
+                  >
+                    {socialSubmitting === "apple"
+                      ? "Connecting..."
+                      : "Continue with Apple"}
+                  </Text>
+                </>
+              )}
+            </Pressable>
 
             {/* Sign Up Link */}
             <View className="items-center">

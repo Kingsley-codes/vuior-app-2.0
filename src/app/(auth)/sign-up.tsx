@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
   Image,
   StatusBar,
@@ -291,10 +291,12 @@ export default function SignUpScreen() {
                 style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
               >
                 <Ionicons name="call-outline" size={18} color="#9ca3af" />
-                <TouchableOpacity
+                <Pressable
                   onPress={() => setShowCountryPicker(true)}
                   className="flex-row items-center ml-2 mr-1"
-                  activeOpacity={0.7}
+                  style={({ pressed }) => ({
+                    opacity: pressed ? 0.7 : 1,
+                  })}
                 >
                   <CountryPicker
                     countryCode={selectedCountry.cca2}
@@ -319,7 +321,7 @@ export default function SignUpScreen() {
                   >
                     +{selectedCountry.callingCode?.[0]}
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
                 <View className="w-px h-5 bg-gray-200 mr-2" />
                 <TextInput
                   className="flex-1 text-sm text-gray-900"
@@ -396,16 +398,19 @@ export default function SignUpScreen() {
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                 />
-                <TouchableOpacity
+                <Pressable
                   onPress={() => setShowPassword(!showPassword)}
                   className="p-1"
+                  style={({ pressed }) => ({
+                    opacity: pressed ? 0.7 : 1,
+                  })}
                 >
                   <Ionicons
                     name={showPassword ? "eye-outline" : "eye-off-outline"}
                     size={18}
                     color="#9ca3af"
                   />
-                </TouchableOpacity>
+                </Pressable>
               </View>
               <Text
                 className="text-xs text-gray-400 mt-1.5 ml-1"
@@ -450,9 +455,12 @@ export default function SignUpScreen() {
                   secureTextEntry={!showConfirmPassword}
                   autoCapitalize="none"
                 />
-                <TouchableOpacity
+                <Pressable
                   onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="p-1"
+                  style={({ pressed }) => ({
+                    opacity: pressed ? 0.7 : 1,
+                  })}
                 >
                   <Ionicons
                     name={
@@ -461,7 +469,7 @@ export default function SignUpScreen() {
                     size={18}
                     color="#9ca3af"
                   />
-                </TouchableOpacity>
+                </Pressable>
               </View>
               {errors.confirmPassword && (
                 <Text
@@ -475,20 +483,20 @@ export default function SignUpScreen() {
 
             {/* Terms Checkbox */}
             <View className="flex-row items-center mb-6">
-              <TouchableOpacity
+              <Pressable
                 onPress={() => setAgreed(!agreed)}
                 className="w-5 h-5 rounded mr-2.5 items-center justify-center"
-                style={{
+                style={({ pressed }) => ({
                   borderWidth: 1.5,
                   borderColor: agreed ? "#15803d" : "#d1d5db",
                   backgroundColor: agreed ? "#15803d" : "#ffffff",
-                }}
-                activeOpacity={0.8}
+                  opacity: pressed ? 0.8 : 1,
+                })}
               >
                 {agreed && (
                   <Ionicons name="checkmark" size={13} color="#ffffff" />
                 )}
-              </TouchableOpacity>
+              </Pressable>
               <Text
                 className="text-sm text-gray-600 flex-1 flex-wrap"
                 style={{ fontFamily: "Inter_400Regular" }}
@@ -511,12 +519,13 @@ export default function SignUpScreen() {
             </View>
 
             {/* Sign Up Button */}
-            <TouchableOpacity
+            <Pressable
               className="bg-vuior-alternate-500 rounded-xl py-4 items-center mb-5"
-              activeOpacity={0.88}
               onPress={handleSignUp}
               disabled={isSubmitting}
-              style={{ opacity: isSubmitting ? 0.7 : 1 }}
+              style={({ pressed }) => ({
+                opacity: isSubmitting ? 0.7 : pressed ? 0.88 : 1,
+              })}
             >
               <Text
                 className="text-base text-white"
@@ -524,7 +533,7 @@ export default function SignUpScreen() {
               >
                 {isSubmitting ? "Creating account..." : "Sign Up"}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
 
             {/* Divider */}
             <View className="flex-row items-center mb-4">
@@ -539,47 +548,59 @@ export default function SignUpScreen() {
             </View>
 
             {/* Continue with Google */}
-            <TouchableOpacity
+            <Pressable
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-3"
-              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
-              activeOpacity={0.85}
+              style={({ pressed }) => ({
+                backgroundColor: "rgba(255,255,255,0.9)",
+                opacity: pressed ? 0.85 : 1,
+              })}
               onPress={continueWithGoogle}
               disabled={Boolean(socialSubmitting)}
             >
-              <GoogleIcon size={20} />
-              <Text
-                className="text-sm text-gray-900 ml-2"
-                style={{ fontFamily: "Inter_600SemiBold" }}
-              >
-                {socialSubmitting === "google"
-                  ? "Connecting..."
-                  : "Continue with Google"}
-              </Text>
-            </TouchableOpacity>
+              {({ pressed }) => (
+                <>
+                  <GoogleIcon size={20} />
+                  <Text
+                    className="text-sm text-gray-900 ml-2"
+                    style={{ fontFamily: "Inter_600SemiBold" }}
+                  >
+                    {socialSubmitting === "google"
+                      ? "Connecting..."
+                      : "Continue with Google"}
+                  </Text>
+                </>
+              )}
+            </Pressable>
 
             {/* Continue with Apple */}
-            <TouchableOpacity
+            <Pressable
               className="flex-row items-center justify-center border border-gray-200 rounded-xl py-3.5 mb-6"
-              style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
-              activeOpacity={0.85}
+              style={({ pressed }) => ({
+                backgroundColor: "rgba(255,255,255,0.9)",
+                opacity: pressed ? 0.85 : 1,
+              })}
               onPress={continueWithApple}
               disabled={Boolean(socialSubmitting)}
             >
-              <Ionicons
-                name="logo-apple"
-                size={20}
-                color="#111827"
-                style={{ marginRight: 10 }}
-              />
-              <Text
-                className="text-sm text-gray-900"
-                style={{ fontFamily: "Inter_600SemiBold" }}
-              >
-                {socialSubmitting === "apple"
-                  ? "Connecting..."
-                  : "Continue with Apple"}
-              </Text>
-            </TouchableOpacity>
+              {({ pressed }) => (
+                <>
+                  <Ionicons
+                    name="logo-apple"
+                    size={20}
+                    color="#111827"
+                    style={{ marginRight: 10 }}
+                  />
+                  <Text
+                    className="text-sm text-gray-900"
+                    style={{ fontFamily: "Inter_600SemiBold" }}
+                  >
+                    {socialSubmitting === "apple"
+                      ? "Connecting..."
+                      : "Continue with Apple"}
+                  </Text>
+                </>
+              )}
+            </Pressable>
 
             {/* Login Link */}
             <View className="items-center mb-8">
